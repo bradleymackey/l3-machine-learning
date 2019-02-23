@@ -26,7 +26,11 @@
 
 % MAYBE DON'T TREAT IT SO MUCH AS A NARATIVE AND DON'T SHOW SO MANY GRAPHS OF THE PERFORMANCE? JUST TALK ABOUT SPECIFIC THINGS THAT DID/DIDN'T WORK
 
-The base network consists of a simple, 3 layer fully connected network containing only 1 hidden layer. This performs poorly as there is little opportunity for the network to learn deep and abstract representations by using a single hidden layer. Additionally, spatially related information is not considered together---a vital aspect of an image classification task, where neighbouring pixels need to be considered as a unit in order to identify items in given images. After around 50 epochs, this network only shows accuracy of around 15\%, also showing signs of overfitting as the training becomes better classified than the test set.
+\subsection{Linear Network}
+
+The base network consists of a simple, 3 layer fully connected network containing only 1 hidden layer. This performs poorly as there is little opportunity for the network to learn deep and abstract representations by using a single hidden layer. Additionally, spatially related information is not considered together---a vital aspect of an image classification task, where neighbouring pixels need to be considered as a unit in order to identify items in given images. 
+
+It was quickly established that the greater number of epochs, the greater overall accuracy of the trained network. After around 50 epochs, this network only shows accuracy of around 15\%, also showing signs of overfitting as the training data starts to obtain higher recall accurately than the test data.
 
     \begin{center}
         \begin{minipage}{0.75\linewidth}
@@ -34,11 +38,12 @@ The base network consists of a simple, 3 layer fully connected network containin
             \captionof{figure}{Initial accuracy, 3 fully connected layers (1 hidden) with ReLU normalisation.}
         \end{minipage}%
     \end{center}
-
+    
+\subsection{Convolutions}
 
 To remedy this, we replace the pure linear structure of the network with a convolution based network. Convolutional Neural Networks (CNNs) are able to better learn representations based on a number of spatially related inputs, allowing for better generalisation of image data. This is achieved by learning convolution masks and which reduce the dimensionality of the image. 
 
-My first modified network consisted of 2 convolutional layers, each followed by a max pooling layer (2x2). Then, flattening this output, it is passed to two hidden fully-connected layers before the final classification layer. As shown in Figure \ref{fig:first-conv}, after 100 epochs the network shows far fewer signs of overfitting as the accuracy climbs past 20\%.
+My first modified network consisted of 2 convolutional layers, each followed by a max pooling layer (2x2). Then, flattening this output, it is passed to two hidden fully-connected layers before the final classification layer. As shown in Figure \ref{fig:first-conv}, after 100 epochs the network shows far fewer signs of overfitting as the accuracy climbs past 20\%. However, the accuracy did not climb as quickly as I expected it to compared to the prior network.
 
 \begin{small}
 \begin{verbatim}
@@ -46,19 +51,26 @@ class BetterNetwork(nn.Module):
 
     def __init__(self):
         super(BetterNetwork, self).__init__()
-        self.conv1 = nn.Conv2d(3,6,5)
-        self.pool1 = nn.MaxPool2d(2,2)
-        self.conv2 = nn.Conv2d(6,12,3)
-        self.pool2 = nn.MaxPool2d(2,2)
-        self.fc1 = nn.Linear(in_features=432, out_features=512)
-        self.fc2 = nn.Linear(in_features=512, out_features=100)
+        conv = nn.ModuleList()
+        conv.append(nn.Conv2d(3,6,5))
+        conv.append(nn.MaxPool2d(2,2))
+        lin.append(nn.ReLU())
+        conv.append(nn.Conv2d(6,12,3))
+        conv.append(nn.MaxPool2d(2,2))
+        lin.append(nn.ReLU())
+        self.conv = conv
+        lin = nn.ModuleList()
+        lin.append(nn.Linear(in_features=432, out_features=512))
+        lin.append(nn.ReLU())
+        lin.append(nn.Linear(in_features=512, out_features=100))
+        self.lin = lin
 
     def forward(self, x):
-        x = self.pool1(F.relu(self.conv1(x)))
-        x = self.pool2(F.relu(self.conv2(x)))
+        for l in self.conv:
+            x = l(x)
         x = x.view(x.size(0), -1) # flatten
-        x = self.fc1(x)
-        x = self.fc2(x)
+        for l in self.lin:
+            x = l(x)
         return x
 \end{verbatim}
 \end{small}
@@ -71,47 +83,110 @@ class BetterNetwork(nn.Module):
             \label{fig:first-conv}
         \end{minipage}%
     \end{center}
+    
+\subsection{Regularisation \& Optimiser}
+
+To reduce the signs of this overfitting and to train a more accurate network, I added dropout layers after each max pooling and the first fully connected layer, each with probability 0.1. We clearly notice far similar performance for training and validation, such that allowing the training to run for around 180 epochs yields a far better network, with overfitting starting to occur much later. 
+
+    \begin{center}
+        \begin{minipage}{0.75\linewidth}
+            \includegraphics[width=\linewidth]{accuracy2}
+            \captionof{figure}{Dropout layers (p=0.2) after each network segment.}
+            \label{fig:first-conv}
+        \end{minipage}%
+    \end{center}
+
+Changing this dropout later to 0.2, I noticed marginal improvements to this point where the overtraining occurs.
+
+The most remarkable improvement occurred when changing the optimiser to \textit{Adam}. The network learned far more quickly, but also began overfitting far more quickly after only around 10 epochs. This, however, is still a vast improvement.
 
 
-In order to try and obtain better results from the existing network, I increased the batch size from 16 to 32. This should allow for better generalisations to be learned at once, as more training examples will now be considered before weights and biases are updated at each step. Additionally, I added an additional convolutional layer, as well as using a max pooling layer on each of these. Thus our current network architecture is:
+    \begin{center}
+        \begin{minipage}{0.75\linewidth}
+            \includegraphics[width=\linewidth]{accuracy3}
+            \captionof{figure}{Adam optimiser. Learns---and overfits---far more quickly.}
+            \label{fig:first-conv}
+        \end{minipage}%
+    \end{center}
+    
+This overfitting was able to be slightly reduced by making improvements to the core network. Namely, using smaller convolution kernels of \texttt{3x3} for each convolutional layer and reducing the output channel sizes to 5 and 8. A small improvement is able to be observed.
 
-\begin{center}
+   \begin{center}
+        \begin{minipage}{0.75\linewidth}
+            \includegraphics[width=\linewidth]{accuracy4}
+            \captionof{figure}{After modification---slightly reduced overfitting.}
+            \label{fig:first-conv}
+        \end{minipage}%
+    \end{center}
+    
+I found that augmenting the training images with random rotations, saturation changes and flips reduced the effect of the overfitting on the network and was able to achieve roughly the same peak accuracy on the test set of around 30\%, but took far longer to train (25 vs. 115 epochs until overfitting). In further tests, I found it prevented optimal performance, so I disabled this.
+
+   \begin{center}
+        \begin{minipage}{0.75\linewidth}
+            \includegraphics[width=\linewidth]{accuracy5}
+            \captionof{figure}{Far longer training with image augmentation, obtaining similar peak accuracy of around 30\%.}
+            \label{fig:first-conv}
+        \end{minipage}%
+    \end{center}
+    
+Additionally, I found that batch normalisation on the output of the convolutional layers was able to further increase the amount of time before over-fitting occurs and offered a slight increase in the accuracy of the network.
+
+\subsection{Further Network Improvements}
+
+% place for additional things to push the network to be the best it can possibly be
+
+After experimenting with tweaks to the dimensions of the penultimate linear layer I found that size had little effect (unless made to be far too small ($<30$) or far too large ($>2048$) where performance slightly reduced) on network performance. Additionally, I found adding more than 2 hidden linear layers resulted in reduced network accuracy after a similar number of epochs and the network struggles to improve, also increasing the likelihood of overfitting. This occured for a variety of sizes.
+
+    \begin{center}
+        \begin{minipage}{0.75\linewidth}
+            \includegraphics[width=\linewidth]{accuracy6}
+            \captionof{figure}{4 hidden linear layers, greater likelihood of overfitting later on.}
+        \end{minipage}%
+    \end{center}
+    
+Next, I increased the batch size to 32. This should better inform the network at each step how to adjust the particular weights, as more of the dataset is considered at each learning step. I then added another convolution to the network and dramatically increased the number of channels output by each:
+
 \begin{small}
 \begin{verbatim}
-class MyNetwork(nn.Module):
-
-    def __init__(self):
-        super(MyNetwork, self).__init__()
-        self.conv1 = nn.Conv2d(3,6,3)
-        self.pool1 = nn.MaxPool2d(2, 2)
-        self.conv2 = nn.Conv2d(6,16,3)
-        self.pool2 = nn.MaxPool2d(2, 2)
-        self.fc1 = nn.Linear(in_features=576, out_features=512)
-        self.fc2 = nn.Linear(in_features=512, out_features=100)
-
-    def forward(self, x):
-        x = self.pool1(F.relu(self.conv1(x)))
-        x = self.pool2(F.relu(self.conv2(x)))
-        x = x.view(x.size(0), -1) # flatten
-        x = self.fc1(x)
-        x = self.fc2(x)
-        return x
+conv = nn.ModuleList()
+conv.append(nn.Conv2d(3,16,3,stride=2))
+conv.append(nn.Dropout(0.2))
+conv.append(nn.BatchNorm2d(16))
+conv.append(nn.ReLU())
+conv.append(nn.Conv2d(16,32,3,stride=2))
+conv.append(nn.Dropout(0.1))
+conv.append(nn.BatchNorm2d(32))
+conv.append(nn.ReLU())
+conv.append(nn.Conv2d(32,32,3,stride=2))
+conv.append(nn.Dropout(0.1))
+conv.append(nn.ReLU())
+self.conv = conv
+lin = nn.ModuleList()
+lin.append(nn.Linear(in_features=288, out_features=512))
+lin.append(nn.ReLU())
+lin.append(nn.Linear(in_features=512, out_features=100))
+self.lin = lin
 \end{verbatim}
 \end{small}
-\end{center}
 
-Surprisingly, this gave much worse results than anything before, accuracy not even climbing past 2\%. However, as the accuracy had not seemed to level off as much as prior examples, I increased the number of epochs from 10 to 25, giving the network more opportunities to pick up features from the training data. This revealed something very remarkable---the best improvements to the network only started to be experienced after 10 epochs. Not seeing any signs of overfitting, I further increased the number of epochs to 50, and was able to see further improvements still.
+This allowed for much less overfitting and the network to confidently achieve classification accuracy of around 35\%.
 
-  \begin{center}
-        \begin{minipage}{0.48\linewidth}
-            \includegraphics[width=\linewidth]{accuracy4}
-            \captionof{figure}{25 epochs, accuracy still rapidly climbing---notice no improvements until after 10 epochs}
-            \end{minipage}%
-            \hfill
-            \begin{minipage}{0.49\linewidth}
-            \includegraphics[width=\linewidth]{accuracy5}
-            \captionof{figure}{50 epochs, still no signs of overfitting}
-        \end{minipage}
+     \begin{center} % 0.348 accuracy
+        \begin{minipage}{0.75\linewidth}
+            \includegraphics[width=\linewidth]{accuracy7}
+            \captionof{figure}{Updated network, featuring much larger output channels from convolutions.}
+        \end{minipage}%
+    \end{center}
+    
+
+For my final network, I added 3 extra identical convolutions to the end of the network, the same as the final layer, making the convolutional aspect of the network far deeper. This network somewhat started to overfit towards the end but I was unable to find a better performing network that did not overfit. The best test accuracy I was able to obtain is \textbf{40.0\%}.
+
+
+     \begin{center} % 0.348 accuracy
+        \begin{minipage}{0.75\linewidth}
+            \includegraphics[width=\linewidth]{accuracy8}
+            \captionof{figure}{The final network, consiting of 5 convolutional and 2 linear layers.}
+        \end{minipage}%
     \end{center}
 
 

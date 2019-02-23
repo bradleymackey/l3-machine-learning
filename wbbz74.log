@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.7.26)  18 FEB 2019 22:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.7.26)  23 FEB 2019 19:25
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -528,7 +528,20 @@ File: pgfcalendar.code.tex 2007/07/23 v3.0.1a (rcs-revision 1.11)
 \gtt@calendar@startofweek=\count137
 \gtt@left@slot=\count138
 \gtt@right@slot=\count139
-) (./wbbz74.aux)
+) (./wbbz74.aux
+
+LaTeX Warning: Label `fig:first-conv' multiply defined.
+
+
+LaTeX Warning: Label `fig:first-conv' multiply defined.
+
+
+LaTeX Warning: Label `fig:first-conv' multiply defined.
+
+
+LaTeX Warning: Label `fig:first-conv' multiply defined.
+
+)
 \openout1 = `wbbz74.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
@@ -660,47 +673,79 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 <./images/accuracy0.png, id=4, 1089.06876pt x 384.43625pt>
 File: ./images/accuracy0.png Graphic file (type png)
 <use ./images/accuracy0.png>
-Package pdftex.def Info: ./images/accuracy0.png  used on input line 33.
+Package pdftex.def Info: ./images/accuracy0.png  used on input line 37.
 (pdftex.def)             Requested size: 341.47508pt x 120.53491pt.
  [1
 
 {/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./image
 s/accuracy0.png>]
-<./images/accuracy1.png, id=17, 1090.0725pt x 382.42876pt>
+<./images/accuracy1.png, id=16, 1090.0725pt x 382.42876pt>
 File: ./images/accuracy1.png Graphic file (type png)
 <use ./images/accuracy1.png>
-Package pdftex.def Info: ./images/accuracy1.png  used on input line 69.
+Package pdftex.def Info: ./images/accuracy1.png  used on input line 81.
 (pdftex.def)             Requested size: 341.47508pt x 119.79462pt.
+<./images/accuracy2.png, id=17, 871.255pt x 298.11375pt>
+File: ./images/accuracy2.png Graphic file (type png)
+<use ./images/accuracy2.png>
+Package pdftex.def Info: ./images/accuracy2.png  used on input line 93.
+(pdftex.def)             Requested size: 341.47508pt x 116.83704pt.
  [2 <./images/accuracy1.png>]
-<./images/accuracy4.png, id=22, 462.528pt x 346.896pt>
+<./images/accuracy3.png, id=23, 872.25874pt x 305.14pt>
+File: ./images/accuracy3.png Graphic file (type png)
+<use ./images/accuracy3.png>
+Package pdftex.def Info: ./images/accuracy3.png  used on input line 106.
+(pdftex.def)             Requested size: 341.47508pt x 119.45575pt.
+<./images/accuracy4.png, id=24, 864.22874pt x 299.1175pt>
 File: ./images/accuracy4.png Graphic file (type png)
 <use ./images/accuracy4.png>
-Package pdftex.def Info: ./images/accuracy4.png  used on input line 107.
-(pdftex.def)             Requested size: 218.54211pt x 163.90921pt.
-<./images/accuracy5.png, id=23, 462.528pt x 346.896pt>
+Package pdftex.def Info: ./images/accuracy4.png  used on input line 116.
+(pdftex.def)             Requested size: 341.47508pt x 118.18434pt.
+<./images/accuracy5.png, id=25, 863.225pt x 300.12125pt>
 File: ./images/accuracy5.png Graphic file (type png)
 <use ./images/accuracy5.png>
-Package pdftex.def Info: ./images/accuracy5.png  used on input line 112.
-(pdftex.def)             Requested size: 223.09955pt x 167.32863pt.
- [3 <./images/accuracy4.png> <./images/accuracy5.png>] (./wbbz74.aux) ) 
+Package pdftex.def Info: ./images/accuracy5.png  used on input line 126.
+(pdftex.def)             Requested size: 341.47508pt x 118.71832pt.
+ [3 <./images/accuracy2.png> <./images/accuracy3.png> <./images/accuracy4.png>]
+<./images/accuracy6.png, id=33, 866.23625pt x 306.14375pt>
+File: ./images/accuracy6.png Graphic file (type png)
+<use ./images/accuracy6.png>
+Package pdftex.def Info: ./images/accuracy6.png  used on input line 142.
+(pdftex.def)             Requested size: 341.47508pt x 120.68488pt.
+ [4 <./images/accuracy5.png> <./images/accuracy6.png>]
+<./images/accuracy7.png, id=40, 857.2025pt x 298.11375pt>
+File: ./images/accuracy7.png Graphic file (type png)
+<use ./images/accuracy7.png>
+Package pdftex.def Info: ./images/accuracy7.png  used on input line 176.
+(pdftex.def)             Requested size: 341.47508pt x 118.75665pt.
+<./images/accuracy8.png, id=41, 875.27pt x 306.14375pt>
+File: ./images/accuracy8.png Graphic file (type png)
+<use ./images/accuracy8.png>
+Package pdftex.def Info: ./images/accuracy8.png  used on input line 187.
+(pdftex.def)             Requested size: 341.47508pt x 119.4376pt.
+ [5 <./images/accuracy7.png> <./images/accuracy8.png>] (./wbbz74.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 15738 strings out of 492649
- 321247 string characters out of 6129622
- 376091 words of memory out of 5000000
- 19308 multiletter control sequences out of 15000+600000
- 15210 words of font info for 56 fonts, out of 8000000 for 9000
+ 15766 strings out of 492649
+ 321889 string characters out of 6129622
+ 375130 words of memory out of 5000000
+ 19330 multiletter control sequences out of 15000+600000
+ 15724 words of font info for 58 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,6n,65p,649b,353s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/lo
-cal/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/loc
-al/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/loca
-l/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/
-texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/te
-xlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on wbbz74.pdf (3 pages, 531478 bytes).
+ 62i,6n,65p,512b,351s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
+</usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
+/usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></u
+sr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr
+/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/
+local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on wbbz74.pdf (5 pages, 1510662 bytes).
 PDF statistics:
- 46 PDF objects out of 1000 (max. 8388607)
- 27 compressed objects within 1 object stream
+ 70 PDF objects out of 1000 (max. 8388607)
+ 37 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 33 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 58 words of extra memory for PDF output out of 10000 (max. 10000000)
 
