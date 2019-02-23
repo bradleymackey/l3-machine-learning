@@ -135,7 +135,7 @@ Additionally, I found that batch normalisation on the output of the convolutiona
 
 % place for additional things to push the network to be the best it can possibly be
 
-After experimenting with tweaks to the dimensions of the penultimate linear layer I found that size had little effect (unless made to be far too small ($<30$) or far too large ($>2048$) where performance slightly reduced) on network performance. Additionally, I found adding more than 2 hidden linear layers resulted in reduced network accuracy after a similar number of epochs and the network struggles to improve, also increasing the likelihood of overfitting. This occured for a variety of sizes.
+After experimenting with tweaks to the dimensions of the penultimate linear layer I found that size had little effect (unless made to be far too small ($<30$) or far too large ($>2048$) where performance slightly reduced) on network performance. Additionally, I found adding more than 3 hidden linear layers resulted in reduced network accuracy after a similar number of epochs and the network struggles to improve, also increasing the likelihood of overfitting. This occurred for a variety of sizes.
 
     \begin{center}
         \begin{minipage}{0.75\linewidth}
@@ -179,16 +179,14 @@ This allowed for much less overfitting and the network to confidently achieve cl
     \end{center}
     
 
-For my final network, I added 3 extra identical convolutions to the end of the network, the same as the final layer, making the convolutional aspect of the network far deeper. This network somewhat started to overfit towards the end but I was unable to find a better performing network that did not overfit. The best test accuracy I was able to obtain is \textbf{40.0\%}.
-
+For my final network, I further adjusted the input and output channels of the convolutional neural networks to increase rapidly to 64 channels, also adding another layer. I also added one additional linear layer.  This network somewhat started to overfit towards the end but I was unable to find a better performing network that did not overfit. The best test accuracy I was able to obtain is \textbf{42.1\%}.
 
      \begin{center} % 0.348 accuracy
         \begin{minipage}{0.75\linewidth}
-            \includegraphics[width=\linewidth]{accuracy8}
-            \captionof{figure}{The final network, consiting of 5 convolutional and 2 linear layers.}
+            \includegraphics[width=\linewidth]{accuracy9}
+            \captionof{figure}{The final network, consisting of 4 convolutional and 3 linear layers.}
         \end{minipage}%
     \end{center}
-
 
 \section{Generating a Pegasus}
 
