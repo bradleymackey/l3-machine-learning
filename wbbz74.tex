@@ -109,7 +109,7 @@ The most remarkable improvement occurred when changing the optimiser to \textit{
         \end{minipage}%
     \end{center}
     
-This overfitting was able to be slightly reduced by making improvements to the core network. Namely, using smaller convolution kernels of \texttt{3x3} for each convolutional layer and reducing the output channel sizes to 5 and 8. A small improvement is able to be observed.
+This overfitting was able to be slightly reduced by making improvements to the core network. Namely, using smaller convolution kernels of \texttt{3x3} for each convolutional layer and reducing the output channel sizes to 5 and 8 (from 6 and 12). A small improvement is able to be observed.
 
    \begin{center}
         \begin{minipage}{0.75\linewidth}
@@ -179,12 +179,12 @@ This allowed for much less overfitting and the network to confidently achieve cl
     \end{center}
     
 
-For my final network, I further adjusted the input and output channels of the convolutional neural networks to increase rapidly to 64 channels, also adding another layer. I also added one additional linear layer. This was to allow the network more opportunities to learn deep representations.  This network somewhat started to overfit towards the end but I was unable to find a similarly performing network that did begin not overfit. The best test accuracy I was able to obtain is \textbf{42.1\%}.
+For my final network, I decided to test the effect of having a very large number of channels output by the convolutional networks. I adjusted the convolutional layers to increase rapidly to 64 channels, also adding 2 layers. Additionally, another linear layer was added. This was to allow the network more opportunities to learn deep representations.  This network performed better; training was terminated after around 50 epochs, when overfitting became clearly evident. The best test accuracy I was able to obtain is \textbf{42.1\%}.
 
      \begin{center} % 0.348 accuracy
         \begin{minipage}{0.75\linewidth}
-            \includegraphics[width=\linewidth]{accuracy9}
-            \captionof{figure}{The final network, consisting of 4 convolutional and 3 linear layers.}
+            \includegraphics[width=\linewidth]{accuracy10}
+            \captionof{figure}{The final network, consisting of 5 convolutional and 3 linear layers.}
         \end{minipage}%
     \end{center}
 
