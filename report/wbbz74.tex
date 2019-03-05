@@ -12,6 +12,8 @@
 \usepackage{enumerate}
 \usepackage[font=small,labelfont=bf]{caption} % Required for specifying captions to tables and figures
 \usepackage{pgfgantt} % gantt chart!
+\usepackage{setspace}
+\renewcommand{\baselinestretch}{1.2}
 
 \graphicspath{ {./images/} }
 
@@ -39,9 +41,9 @@ It was quickly established that the greater number of epochs, the greater overal
         \end{minipage}%
     \end{center}
     
-\subsection{Convolutions}
+\subsection{Convolutional Networks}
 
-To remedy this, we replace the pure linear structure of the network with a convolution based network. Convolutional Neural Networks (CNNs) are able to better learn representations based on a number of spatially related inputs, allowing for better generalisation of image data. This is achieved by learning convolution masks and which reduce the dimensionality of the image. 
+To remedy this, we replace the pure linear structure of the network with a convolution based network. Convolutional Neural Networks (CNNs) are able to better learn representations based on a number of spatially related inputs, allowing for better generalisation of image data. This is achieved by learning convolution masks and which reduce the dimensionality of the image. We would expect to see vastly improved performance adopting a convolutional based network.
 
 My first modified network consisted of 2 convolutional layers, each followed by a max pooling layer (2x2). Then, flattening this output, it is passed to two hidden fully-connected layers before the final classification layer. As shown in Figure \ref{fig:first-conv}, after 100 epochs the network shows far fewer signs of overfitting as the accuracy climbs past 20\%. However, the accuracy did not climb as quickly as I expected it to compared to the prior network.
 
@@ -189,6 +191,8 @@ For my final network, I decided to test the effect of having a very large number
     \end{center}
 
 \section{Generating a Pegasus}
+
+
 
 
 \end{document}
